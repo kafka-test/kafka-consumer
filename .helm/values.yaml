@@ -51,6 +51,16 @@ elCicdChart:
         configMapKeyRef:
           name: kafka-config-${KAFKA_TOPIC}
           key: KAFKA_SERVER
+    - name: KAFKA_GROUP
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-config-${KAFKA_TOPIC}
+          key: KAFKA_GROUP
+    - name: KAFKA_TOPIC
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-config-${KAFKA_TOPIC}
+          key: KAFKA_TOPIC
     volumeMounts:
     - name: kafka-config
       mountPath: /mnt/kafka-config
