@@ -52,10 +52,10 @@ elCicdChart:
           name: kafka-config
           key: KAFKA_SERVER
     volumeMounts:
-      name: kafka-config
+    - name: kafka-config
       path: /mnt/kafka-config
     volumes:
-      configMap:
+    - configMap:
         name: kafka-config-${KAFKA_TOPIC}
         items:
         - key: ca.crt
