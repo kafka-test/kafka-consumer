@@ -53,7 +53,7 @@ elCicdChart:
           key: KAFKA_SERVER
     volumeMounts:
     - name: kafka-config
-      path: /mnt/kafka-config
+      mountPath: /mnt/kafka-config
     volumes:
     - configMap:
         name: kafka-config-${KAFKA_TOPIC}
