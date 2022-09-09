@@ -41,9 +41,9 @@ elCicdChart:
     appNames:
     - ${KAFKA_TOPIC_1}-consumer
     - ${KAFKA_TOPIC_2}-consumer
-    parameters-odd-consumer:
+    parameters-${KAFKA_TOPIC_1}-consumer:
       KAFKA_TOPIC: ${KAFKA_TOPIC_1}
-    parameters-even-consumer:
+    parameters-${KAFKA_TOPIC_2}-consumer:
       KAFKA_TOPIC: ${KAFKA_TOPIC_2}
     env:
     - name: KAFKA_SERVER
