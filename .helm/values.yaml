@@ -49,7 +49,7 @@ elCicdChart:
     - name: KAFKA_SERVER
       valueFrom:
         configMapKeyRef:
-          name: kafka-config
+          name: kafka-config-${KAFKA_TOPIC}
           key: KAFKA_SERVER
     volumeMounts:
     - name: kafka-config
