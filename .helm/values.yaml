@@ -1,5 +1,5 @@
 elCicdChart:
-  parameters:
+  elcicdDefs:
     KAFKA_SERVER: kafka-cluster-kafka-rtlistener-bootstrap-openshift-operators.apps-crc.testing:443
     KAFKA_GROUP: 'odd-even-group'
     KAFKA_TOPIC_1: 'odd-topic'
@@ -38,12 +38,12 @@ elCicdChart:
 
   templates:
   - templateName: deployment
-    appNames:
+    aspectNames:
     - ${KAFKA_TOPIC_1}-consumer
     - ${KAFKA_TOPIC_2}-consumer
-    parameters-${KAFKA_TOPIC_1}-consumer:
+    elcicdDefs-${KAFKA_TOPIC_1}-consumer:
       KAFKA_TOPIC: ${KAFKA_TOPIC_1}
-    parameters-${KAFKA_TOPIC_2}-consumer:
+    elcicdDefs-${KAFKA_TOPIC_2}-consumer:
       KAFKA_TOPIC: ${KAFKA_TOPIC_2}
     env:
     - name: KAFKA_SERVER
@@ -73,12 +73,12 @@ elCicdChart:
           path: ca.crt
 
   - templateName: configMap
-    appNames:
+    aspectNames:
     - kafka-config-${KAFKA_TOPIC_1}
     - kafka-config-${KAFKA_TOPIC_2}
-    parameters-kafka-config-${KAFKA_TOPIC_1}:
+    elcicdDefs-kafka-config-${KAFKA_TOPIC_1}:
       KAFKA_TOPIC: ${KAFKA_TOPIC_1}
-    parameters-kafka-config-${KAFKA_TOPIC_2}:
+    elcicdDefs-kafka-config-${KAFKA_TOPIC_2}:
       KAFKA_TOPIC: ${KAFKA_TOPIC_2}
     data:
       KAFKA_SERVER: ${KAFKA_SERVER}
