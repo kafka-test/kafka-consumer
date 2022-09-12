@@ -10,11 +10,16 @@ kafka_server = os.environ['KAFKA_SERVER']
 kafka_group = os.environ['KAFKA_GROUP']
 kafka_topic = os.environ['KAFKA_TOPIC']
 
+print("Consuming messages from Kafka topic ...")
+os.listdir('/vault/secrets/')
+print("Consuming messages from Kafka topic ...")
+
+
 #  ssl_cafile = '/mnt/kafka-config/ca.crt',
 consumer = KafkaConsumer(kafka_topic,
                          group_id=kafka_group,
                          bootstrap_servers = kafka_server,
-                         ssl_cafile = '/vault/secrets/ca.crt',
+                         ssl_cafile = '/vault/secrets/kafka-poc-ca.crt',
                          security_protocol='SSL',
                          consumer_timeout_ms = 10000,
                          enable_auto_commit=True)
