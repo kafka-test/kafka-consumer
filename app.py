@@ -10,10 +10,10 @@ kafka_server = os.environ['KAFKA_SERVER']
 kafka_group = os.environ['KAFKA_GROUP']
 kafka_topic = os.environ['KAFKA_TOPIC']
 
-print("Consuming messages from Kafka topic ...")
-os.listdir('/vault/secrets/')
-print("Consuming messages from Kafka topic ...")
-
+print("================================")
+dir_list = os.listdir('/vault/secrets/')
+print(dir_list)
+print("================================")
 
 #  ssl_cafile = '/mnt/kafka-config/ca.crt',
 consumer = KafkaConsumer(kafka_topic,
