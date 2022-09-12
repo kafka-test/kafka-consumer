@@ -38,7 +38,7 @@ elCicdChart:
 
   templates:
   - templateName: deployment
-    aspectNames:
+    appNames:
     - ${KAFKA_TOPIC_1}-consumer
     - ${KAFKA_TOPIC_2}-consumer
     elcicdDefs-${KAFKA_TOPIC_1}-consumer:
@@ -73,7 +73,7 @@ elCicdChart:
           path: ca.crt
 
   - templateName: configMap
-    aspectNames:
+    appNames:
     - kafka-config-${KAFKA_TOPIC_1}
     - kafka-config-${KAFKA_TOPIC_2}
     elcicdDefs-kafka-config-${KAFKA_TOPIC_1}:
