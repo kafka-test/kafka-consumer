@@ -10,12 +10,6 @@ kafka_server = os.environ['KAFKA_SERVER']
 kafka_group = os.environ['KAFKA_GROUP']
 kafka_topic = os.environ['KAFKA_TOPIC']
 
-print("================================")
-with open('/vault/secrets/kafka-poc-ca.crt') as f:
-    lines = f.readlines()
-    print(lines)
-print("================================")
-
 #  ssl_cafile = '/mnt/kafka-config/ca.crt',
 consumer = KafkaConsumer(kafka_topic,
                          group_id=kafka_group,
