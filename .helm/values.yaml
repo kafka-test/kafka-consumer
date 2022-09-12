@@ -20,7 +20,7 @@ elCicdChart:
         vault.hashicorp.com/agent-inject-secret-kafka-poc-ca.crt: 'secret/data/kafka-poc/cert'
         vault.hashicorp.com/agent-inject-template-kafka-poc-ca.crt: |
           {{- with secret "secret/data/kafka-poc/cert" -}}
-          {{- .Data.data.ca.crt }}
+          {{- .Data.data.cacrt }}
           {{- end -}}
     serviceAccountName: kafka-poc
     env:
