@@ -34,16 +34,6 @@ elCicdChart:
         configMapKeyRef:
           name: kafka-config-${KAFKA_TOPIC}
           key: KAFKA_TOPIC
-    volumeMounts:
-    - name: kafka-config
-      mountPath: /mnt/kafka-config
-    volumes:
-    - name: kafka-config
-      configMap:
-        name: kafka-config-${KAFKA_TOPIC}
-        items:
-        - key: ca.crt
-          path: ca.crt
 
   - templateName: configMap
     appNames:
