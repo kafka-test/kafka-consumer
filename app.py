@@ -11,8 +11,9 @@ kafka_group = os.environ['KAFKA_GROUP']
 kafka_topic = os.environ['KAFKA_TOPIC']
 
 print("================================")
-dir_list = os.listdir('/vault/secrets/')
-print(dir_list)
+with open('readme.txt') as f:
+    lines = f.readlines()
+    print(lines)
 print("================================")
 
 #  ssl_cafile = '/mnt/kafka-config/ca.crt',
