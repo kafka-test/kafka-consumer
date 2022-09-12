@@ -18,6 +18,7 @@ elCicdChart:
         vault.hashicorp.com/agent-inject: 'true'
         vault.hashicorp.com/role: 'default'
         vault.hashicorp.com/agent-inject-secret-kafka-kafka-poc-ca.crt: 'secret/data/kafka/kafka-poc'
+    serviceAccountName: kafka-poc
     env:
     - name: KAFKA_SERVER
       valueFrom:
