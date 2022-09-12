@@ -16,7 +16,7 @@ elCicdChart:
       KAFKA_TOPIC: ${KAFKA_TOPIC_2}
     annotations:
         vault.hashicorp.com/agent-inject: 'true'
-        vault.hashicorp.com/role: 'default'
+        vault.hashicorp.com/role: 'kafka-poc'
         vault.hashicorp.com/agent-inject-secret-kafka-kafka-poc-ca.crt: 'secret/data/kafka/kafka-poc'
     serviceAccountName: kafka-poc
     env:
