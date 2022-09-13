@@ -11,10 +11,10 @@ dependencies:
 - name: elCicdChart
   version: 0.1.0
   repository: https://raw.githubusercontent.com/elcicd/el-CICD-deploy/main/charts/
-  # repository: file://../../el-CICD-deploy/charts/elCicdChart
+  # repository: file://../../../elcicd-dev/el-CICD-deploy/charts/elCicdChart
 - name: elCicdResources
   version: 0.1.0
-  repository: https://raw.githubusercontent.com/elcicd/el-CICD-deploy/main/charts/
-  # repository: file://../../el-CICD-deploy/charts/elCicdResources
+  # repository: https://raw.githubusercontent.com/elcicd/el-CICD-deploy/main/charts/
+  repository: file://../../../elcicd-dev/el-CICD-deploy/charts/elCicdResources
   import-values:
   - data
