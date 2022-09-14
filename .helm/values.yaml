@@ -1,58 +1,82 @@
 elCicdChart:
   elcicdDefs:
-    KAFKA_SERVER: kafka-cluster-kafka-rtlistener-bootstrap-openshift-operators.apps-crc.testing:443
-    KAFKA_GROUP: 'odd-even-group'
-    KAFKA_TOPIC_1: 'odd-topic'
-    KAFKA_TOPIC_2: 'even-topic'
+    ODD: odd
+    EVEN: even
+    KAFKA_POC: kafka-poc
+    KAFKA_GROUP: ${ODD}-${EVEN}-group
+    KAFKA_TOPIC_ODD: ${ODD}-topic
+    KAFKA_TOPIC_EVEN: ${EVEN}-topic
+    CONSUMER_ODD: ${KAFKA_TOPIC_ODD}-consumer
+    CONSUMER_EVEN: ${KAFKA_TOPIC_EVEN}-consumer
+    APP_NAMES:
+    - ${CONSUMER_ODD}
+    - ${CONSUMER_EVEN}
+  elcicdDefs-${CONSUMER_ODD}:
+    KAFKA_TOPIC: ${KAFKA_TOPIC_ODD}
+  elcicdDefs-${CONSUMER_EVEN}:
+    KAFKA_TOPIC: ${KAFKA_TOPIC_EVEN}
 
   templates:
   - templateName: deployment
-    appNames:
-    - ${KAFKA_TOPIC_1}-consumer
-    - ${KAFKA_TOPIC_2}-consumer
-    elcicdDefs-${KAFKA_TOPIC_1}-consumer:
-      KAFKA_TOPIC: ${KAFKA_TOPIC_1}
-    elcicdDefs-${KAFKA_TOPIC_2}-consumer:
-      KAFKA_TOPIC: ${KAFKA_TOPIC_2}
+    appNames: ${APP_NAMES}
     annotations:
-        vault.hashicorp.com/agent-inject: 'true'
-        vault.hashicorp.com/role: 'kafka-poc'
-        vault.hashicorp.com/agent-inject-secret-ca.crt: 'secret/data/kafka-poc/cert'
+        vault.hashicorp.com/agent-inject: true
+        vault.hashicorp.com/role: ${APP_NAME}
+        vault.hashicorp.com/agent-inject-secret-ca.crt: secret/data/${RELEASE_NAMESPACE}/${APP_NAME}
         vault.hashicorp.com/agent-inject-template-ca.crt: |-
-          {{- with secret "secret/data/kafka-poc/cert" -}}
-          {{- .Data.data.cacrt }}
+          {{- with secret "secret/data/${NAMESPACE}/${APP_NAME}" -}}
+            {{- .Data.data.cacrt }}
           {{- end -}}
-    serviceAccountName: kafka-poc
+    serviceAccountName: ${APP_NAME}
     env:
     - name: KAFKA_SERVER
       valueFrom:
         configMapKeyRef:
-          name: kafka-config-${KAFKA_TOPIC}
+          name: ${APP_NAME}
           key: KAFKA_SERVER
     - name: KAFKA_GROUP
       valueFrom:
         configMapKeyRef:
-          name: kafka-config-${KAFKA_TOPIC}
+          name: ${APP_NAME}
           key: KAFKA_GROUP
     - name: KAFKA_TOPIC
       valueFrom:
         configMapKeyRef:
-          name: kafka-config-${KAFKA_TOPIC}
+          name: ${APP_NAME}
           key: KAFKA_TOPIC
 
   - templateName: configMap
-    appNames:
-    - kafka-config-${KAFKA_TOPIC_1}
-    - kafka-config-${KAFKA_TOPIC_2}
-    elcicdDefs-kafka-config-${KAFKA_TOPIC_1}:
-      KAFKA_TOPIC: ${KAFKA_TOPIC_1}
-    elcicdDefs-kafka-config-${KAFKA_TOPIC_2}:
-      KAFKA_TOPIC: ${KAFKA_TOPIC_2}
+    appNames: ${APP_NAMES}
+    elcicdDefs-dev:
+      KAFKA_SERVER: dev-kafka-cluster-kafka-ext-bootstrap-openshift-operators.apps-crc.testing
+    elcicdDefs-stg:
+      KAFKA_SERVER: stg-kafka-cluster-kafka-ext-bootstrap-openshift-operators.apps-crc.testing
     data:
       KAFKA_SERVER: ${KAFKA_SERVER}
       KAFKA_GROUP: ${KAFKA_GROUP}
       KAFKA_TOPIC: ${KAFKA_TOPIC}
       
   - templateName: serviceAccount
-    appName: kafka-poc
+    appNames: ${APP_NAMES}
+    
+  - templateName: horizontalPodAutoscaler
+    appNames: ${APP_NAMES}
+    elcicdDefs-${CONSUMER_ODD}:
+      MIN_REPLICAS: 2
+      MAX_REPLICAS: 3
+    elcicdDefs-${CONSUMER_EVEN}:
+      MIN_REPLICAS: 3
+      MAX_REPLICAS: 4
+    elcicdDefs-${CONSUMER_ODD}-prod:
+      MAX_REPLICAS: 5
+    elcicdDefs-${CONSUMER_EVEN}-prod:
+      MAX_REPLICAS: 7
+    metrics:
+    - type: Resource
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: ${CPU_UTILIZATION}
+
+    
 
