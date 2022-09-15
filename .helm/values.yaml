@@ -77,8 +77,7 @@ elCicdChart:
     minReplicas: ${MIN_REPLICAS}
     maxReplicas: ${MAX_REPLICAS}
     metrics:
-    - type: containerResource
-      container: ${APP_NAME}
+    - type: Resource
       name: cpu
       target:
         type: Utilization
