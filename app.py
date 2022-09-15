@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
 import os
-from kafka import KafkaProducer, KafkaConsumer
-import json
-from bson import json_util
+from kafka import KafkaConsumer
+from json import loads
 
 # 'kafka-cluster-kafka-rtlistener-bootstrap-openshift-operators.apps-crc.testing:443'
 kafka_server = os.environ['KAFKA_SERVER']
@@ -17,13 +16,14 @@ consumer = KafkaConsumer(kafka_topic,
                          ssl_cafile = '/vault/secrets/ca.crt',
                          security_protocol='SSL',
                          consumer_timeout_ms = 10000,
-                         enable_auto_commit=False,
-                         auto_offset_reset='earliest')
+                         enable_auto_commit=True,
+                         auto_offset_reset='earliest',
+                         value_deserializer=lambda x: loads(x.decode('utf-8'))
 
 print("Consuming messages from Kafka topic ...")
 
 for message in consumer:
     try:
-        print ("[topic: %s]:[partition: %d]:[offset: %d] %s" % (message.topic, message.partition, message.offset, message.value))
+        print ("[topic: {}]:[partition: {}]:[offset: {}] {}".format(message.topic, message.partition, message.offset, message.value))
     except:
         print("Unable to read the message")
