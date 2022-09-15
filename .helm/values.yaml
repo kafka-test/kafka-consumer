@@ -22,7 +22,7 @@ elCicdChart:
     appNames: ${APP_NAMES}
     annotations:
         vault.hashicorp.com/agent-inject: true
-        vault.hashicorp.com/role: ${APP_NAME}
+        vault.hashicorp.com/role: ${RELEASE_NAMESPACE}-${APP_NAME}
         vault.hashicorp.com/agent-inject-secret-ca.crt: secret/data/${RELEASE_NAMESPACE}/${APP_NAME}
         vault.hashicorp.com/agent-inject-template-ca.crt: |-
           {{- with secret "secret/data/${NAMESPACE}/${APP_NAME}" -}}
