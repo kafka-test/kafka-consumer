@@ -21,6 +21,7 @@ elCicdChart:
   - templateName: deployment
     appNames: ${APP_NAMES}
     annotations:
+        vault.hashicorp.com/auth-path: auth/openshift
         vault.hashicorp.com/agent-inject: true
         vault.hashicorp.com/role: ${RELEASE_NAMESPACE}-${APP_NAME}
         vault.hashicorp.com/agent-inject-secret-ca.crt: secret/data/${RELEASE_NAMESPACE}/${APP_NAME}
