@@ -17,7 +17,7 @@ consumer = KafkaConsumer(kafka_topic,
                          ssl_cafile = '/vault/secrets/ca.crt',
                          security_protocol='SSL',
                          consumer_timeout_ms = 10000,
-                         enable_auto_commit=True,
+                         enable_auto_commit=False,
                          auto_offset_reset='earliest')
 
 print("Consuming messages from Kafka topic ...")
