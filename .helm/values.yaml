@@ -11,6 +11,7 @@ elCicdChart:
     APP_NAMES:
     - ${CONSUMER_ODD}
     - ${CONSUMER_EVEN}
+  CPU_UTILIZATION: 90
   elcicdDefs-${CONSUMER_ODD}:
     KAFKA_TOPIC: ${KAFKA_TOPIC_ODD}
   elcicdDefs-${CONSUMER_EVEN}:
@@ -68,8 +69,10 @@ elCicdChart:
       MIN_REPLICAS: 3
       MAX_REPLICAS: 4
     elcicdDefs-${CONSUMER_ODD}-prod:
+      CPU_UTILIZATION: 80
       MAX_REPLICAS: 5
     elcicdDefs-${CONSUMER_EVEN}-prod:
+      CPU_UTILIZATION: 70
       MAX_REPLICAS: 7
     metrics:
     - type: Resource
