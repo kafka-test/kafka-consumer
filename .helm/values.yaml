@@ -74,6 +74,8 @@ elCicdChart:
     elcicdDefs-${CONSUMER_EVEN}-prod:
       CPU_UTILIZATION: 70
       MAX_REPLICAS: 7
+    minReplicas: ${MIN_REPLICAS}
+    maxReplicas: ${MAX_REPLICAS}
     metrics:
     - type: Resource
       name: cpu
