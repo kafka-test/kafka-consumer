@@ -77,7 +77,7 @@ elCicdChart:
     minReplicas: ${MIN_REPLICAS}
     maxReplicas: ${MAX_REPLICAS}
     metrics:
-    - type: Resource
+    - type: resource
       name: cpu
       target:
         type: Utilization
