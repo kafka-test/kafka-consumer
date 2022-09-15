@@ -25,7 +25,7 @@ elCicdChart:
         vault.hashicorp.com/role: ${RELEASE_NAMESPACE}-${APP_NAME}
         vault.hashicorp.com/agent-inject-secret-ca.crt: secret/data/${RELEASE_NAMESPACE}/${APP_NAME}
         vault.hashicorp.com/agent-inject-template-ca.crt: |-
-          {{- with secret "secret/data/${NAMESPACE}/${APP_NAME}" -}}
+          {{- with secret "secret/data/${RELEASE_NAMESPACE}/${APP_NAME}" -}}
             {{- .Data.data.cacrt }}
           {{- end -}}
     serviceAccountName: ${APP_NAME}
