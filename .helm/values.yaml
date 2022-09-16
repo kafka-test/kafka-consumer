@@ -3,7 +3,6 @@ elCicdChart:
     ODD: odd
     EVEN: even
     KAFKA_POC: kafka-poc
-    KAFKA_GROUP: ${ODD}-${EVEN}-group
     KAFKA_TOPIC_ODD: ${ODD}-topic
     KAFKA_TOPIC_EVEN: ${EVEN}-topic
     CONSUMER_ODD: ${KAFKA_TOPIC_ODD}-consumer
@@ -14,13 +13,14 @@ elCicdChart:
     CPU_UTILIZATION: 90
   elcicdDefs-${CONSUMER_ODD}:
     KAFKA_TOPIC: ${KAFKA_TOPIC_ODD}
+    KAFKA_GROUP: ${ODD}-group
   elcicdDefs-${CONSUMER_EVEN}:
     KAFKA_TOPIC: ${KAFKA_TOPIC_EVEN}
+    KAFKA_GROUP: ${EVEN}-group
 
   templates:
   - templateName: deployment
     appNames: ${APP_NAMES}
-    replicas: 3
     annotations:
         vault.hashicorp.com/auth-path: auth/kubernetes
         vault.hashicorp.com/agent-inject: true
