@@ -20,6 +20,7 @@ elCicdChart:
   templates:
   - templateName: deployment
     appNames: ${APP_NAMES}
+    replicas: 3
     annotations:
         vault.hashicorp.com/auth-path: auth/kubernetes
         vault.hashicorp.com/agent-inject: true
@@ -61,28 +62,28 @@ elCicdChart:
   - templateName: serviceAccount
     appNames: ${APP_NAMES}
     
-  - templateName: horizontalPodAutoscaler
-    appNames: ${APP_NAMES}
-    elcicdDefs-${CONSUMER_ODD}:
-      MIN_REPLICAS: 2
-      MAX_REPLICAS: 3
-    elcicdDefs-${CONSUMER_EVEN}:
-      MIN_REPLICAS: 3
-      MAX_REPLICAS: 4
-    elcicdDefs-${CONSUMER_ODD}-prod:
-      CPU_UTILIZATION: 80
-      MAX_REPLICAS: 5
-    elcicdDefs-${CONSUMER_EVEN}-prod:
-      CPU_UTILIZATION: 70
-      MAX_REPLICAS: 7
-    minReplicas: ${MIN_REPLICAS}
-    maxReplicas: ${MAX_REPLICAS}
-    metrics:
-    - type: resource
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: ${CPU_UTILIZATION}
+  # - templateName: horizontalPodAutoscaler
+  #   appNames: ${APP_NAMES}
+  #   elcicdDefs-${CONSUMER_ODD}:
+  #     MIN_REPLICAS: 2
+  #     MAX_REPLICAS: 3
+  #   elcicdDefs-${CONSUMER_EVEN}:
+  #     MIN_REPLICAS: 3
+  #     MAX_REPLICAS: 4
+  #   elcicdDefs-${CONSUMER_ODD}-prod:
+  #     CPU_UTILIZATION: 80
+  #     MAX_REPLICAS: 5
+  #   elcicdDefs-${CONSUMER_EVEN}-prod:
+  #     CPU_UTILIZATION: 70
+  #     MAX_REPLICAS: 7
+  #   minReplicas: ${MIN_REPLICAS}
+  #   maxReplicas: ${MAX_REPLICAS}
+  #   metrics:
+  #   - type: resource
+  #     name: cpu
+  #     target:
+  #       type: Utilization
+  #       averageUtilization: ${CPU_UTILIZATION}
 
     
 
