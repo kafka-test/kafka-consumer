@@ -13,8 +13,8 @@ elCicdChart:
     CPU_UTILIZATION: 90
     RESOURCE_QUOTA:
       limits:
-        cpu: 500m
-        memory: 1Gi
+        cpu: 1
+        memory: 1500Mi
   elcicdDefs-${CONSUMER_ODD}:
     KAFKA_TOPIC: ${KAFKA_TOPIC_ODD}
     KAFKA_GROUP: ${ODD}-group
