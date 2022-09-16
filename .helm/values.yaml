@@ -2,7 +2,6 @@ elCicdChart:
   elcicdDefs:
     ODD: odd
     EVEN: even
-    KAFKA_POC: kafka-poc
     KAFKA_TOPIC_ODD: ${ODD}-topic
     KAFKA_TOPIC_EVEN: ${EVEN}-topic
     CONSUMER_ODD: ${KAFKA_TOPIC_ODD}-consumer
@@ -26,14 +25,14 @@ elCicdChart:
   - templateName: deployment
     appNames: ${APP_NAMES}
     annotations:
-        vault.hashicorp.com/auth-path: auth/kubernetes
-        vault.hashicorp.com/agent-inject: true
-        vault.hashicorp.com/role: ${RELEASE_NAMESPACE}-${APP_NAME}
-        vault.hashicorp.com/agent-inject-secret-ca.crt: secret/data/${RELEASE_NAMESPACE}/${APP_NAME}
-        vault.hashicorp.com/agent-inject-template-ca.crt: |-
-          {{- with secret "secret/data/${RELEASE_NAMESPACE}/${APP_NAME}" -}}
-            {{- .Data.data.cacrt }}
-          {{- end -}}
+        # vault.hashicorp.com/auth-path: auth/kubernetes
+        # vault.hashicorp.com/agent-inject: true
+        # vault.hashicorp.com/role: ${RELEASE_NAMESPACE}-${APP_NAME}
+        # vault.hashicorp.com/agent-inject-secret-ca.crt: secret/data/${RELEASE_NAMESPACE}/${APP_NAME}
+        # vault.hashicorp.com/agent-inject-template-ca.crt: |-
+        #   {{- with secret "secret/data/${RELEASE_NAMESPACE}/${APP_NAME}" -}}
+        #     {{- .Data.data.cacrt }}
+        #   {{- end -}}
     serviceAccountName: ${APP_NAME}
     env:
     - name: KAFKA_SERVER
@@ -52,6 +51,16 @@ elCicdChart:
           name: ${APP_NAME}
           key: KAFKA_TOPIC
     resources: ${RESOURCE_QUOTA}
+    volumeMounts:
+    - name: car-crt
+      mountPath: /mnt/kafka-config
+    volumes:
+    - name: ca-crt
+      configMap:
+        name: ${APP_NAME}
+        items:
+        - key: KAFKA_CERT
+          path: ca.crt
 
   - templateName: configMap
     appNames: ${APP_NAMES}
@@ -63,6 +72,37 @@ elCicdChart:
       KAFKA_SERVER: ${KAFKA_SERVER}
       KAFKA_GROUP: ${KAFKA_GROUP}
       KAFKA_TOPIC: ${KAFKA_TOPIC}
+      KAFKA_CERT: |-
+        -----BEGIN CERTIFICATE-----
+        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
+        -----END CERTIFICATE-----
       
   - templateName: serviceAccount
     appNames: ${APP_NAMES}
@@ -73,8 +113,8 @@ elCicdChart:
       MIN_REPLICAS: 2
       MAX_REPLICAS: 3
     elcicdDefs-${CONSUMER_EVEN}:
-      MIN_REPLICAS: 1
-      MAX_REPLICAS: 3
+      MIN_REPLICAS: 3
+      MAX_REPLICAS: 5
     elcicdDefs-${CONSUMER_ODD}-prod:
       CPU_UTILIZATION: 80
       MAX_REPLICAS: 5
