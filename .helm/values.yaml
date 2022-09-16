@@ -52,7 +52,7 @@ elCicdChart:
           key: KAFKA_TOPIC
     resources: ${RESOURCE_QUOTA}
     volumeMounts:
-    - name: car-crt
+    - name: cr-crt
       mountPath: /mnt/kafka-config
     volumes:
     - name: ca-crt
