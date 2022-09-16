@@ -18,7 +18,7 @@ consumer = KafkaConsumer(kafka_topic,
                          consumer_timeout_ms = 10000,
                          enable_auto_commit=True,
                          auto_offset_reset='earliest',
-                         value_deserializer=lambda x: loads(x.decode('utf-8'))
+                         value_deserializer=lambda x: loads(x.decode('utf-8')))
 
 print("Consuming messages from Kafka topic ...")
 
