@@ -53,7 +53,7 @@ elCicdChart:
     resources: ${RESOURCE_QUOTA}
     volumeMounts:
     - name: ca-crt
-      mountPath: /mnt/kafka-config
+      mountPath: /vault/secret
     volumes:
     - name: ca-crt
       configMap:
