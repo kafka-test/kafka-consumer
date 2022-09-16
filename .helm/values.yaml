@@ -21,6 +21,7 @@ elCicdChart:
   templates:
   - templateName: deployment
     appNames: ${APP_NAMES}
+    replicas: 3
     annotations:
         vault.hashicorp.com/auth-path: auth/kubernetes
         vault.hashicorp.com/agent-inject: true
