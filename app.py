@@ -22,8 +22,11 @@ consumer = KafkaConsumer(kafka_topic,
 
 print("Consuming messages from Kafka topic ...")
 
-for message in consumer:
-    try:
-        print ("[topic: {}]:[partition: {}]:[offset: {}] {}".format(message.topic, message.partition, message.offset, message.value))
-    except:
-        print("Unable to read the message")
+try:
+    for message in consumer:
+        try:
+            print ("[topic: {}]:[partition: {}]:[offset: {}] {}".format(message.topic, message.partition, message.offset, message.value))
+        except:
+            print("Unable to read the message")
+except Exception as e:
+    print(e)
