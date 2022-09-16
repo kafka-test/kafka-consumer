@@ -11,10 +11,10 @@ elCicdChart:
     - ${CONSUMER_ODD}
     - ${CONSUMER_EVEN}
     CPU_UTILIZATION: 90
-  RESOURCE_QUOTA:
-    limits:
-      cpu: 500m
-      memory: 1Gi
+    RESOURCE_QUOTA:
+      limits:
+        cpu: 500m
+        memory: 1Gi
   elcicdDefs-${CONSUMER_ODD}:
     KAFKA_TOPIC: ${KAFKA_TOPIC_ODD}
     KAFKA_GROUP: ${ODD}-group
@@ -52,6 +52,7 @@ elCicdChart:
         configMapKeyRef:
           name: ${APP_NAME}
           key: KAFKA_TOPIC
+    resources: ${RESOURCE_QUOTA}
 
   - templateName: configMap
     appNames: ${APP_NAMES}
